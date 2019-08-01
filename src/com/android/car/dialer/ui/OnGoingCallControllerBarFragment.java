@@ -101,10 +101,10 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             }
             if (v.isActivated()) {
                 v.setActivated(false);
-                onMuteMic();
+                onUnmuteMic();
             } else {
                 v.setActivated(true);
-                onUnmuteMic();
+                onMuteMic();
             }
         });
 
