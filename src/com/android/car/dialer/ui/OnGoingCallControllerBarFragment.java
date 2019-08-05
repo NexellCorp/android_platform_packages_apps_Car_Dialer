@@ -149,10 +149,10 @@ public class OnGoingCallControllerBarFragment extends Fragment {
             }
             if (v.isActivated()) {
                 v.setActivated(false);
-                onHoldCall();
+                onUnholdCall();
             } else {
                 v.setActivated(true);
-                onUnholdCall();
+                onHoldCall();
             }
         });
         return fragmentView;
