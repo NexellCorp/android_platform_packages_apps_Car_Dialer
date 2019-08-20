@@ -18,6 +18,7 @@ package com.android.car.dialer.telecom;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.SystemProperties;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.telecom.InCallService;
@@ -34,6 +35,7 @@ public class InCallServiceImpl extends InCallService {
     private static final String TAG = "Em.InCallService";
 
     static final String ACTION_LOCAL_BIND = "local_bind";
+    static final String AAP_SESSION_PROP = "aap.session.state.connected";
 
     private CopyOnWriteArrayList<Callback> mCallbacks = new CopyOnWriteArrayList<>();
 
@@ -100,7 +102,15 @@ public class InCallServiceImpl extends InCallService {
                 // a way to show heads-up notifications in embedded mode.
                 Intent launchIntent = getPackageManager()
                         .getLaunchIntentForPackage(mTelecomManager.getDefaultDialerPackage());
-                startActivity(launchIntent);
+
+                int aap_connected = Integer.parseInt(SystemProperties.get(AAP_SESSION_PROP, "0"));
+                if (Log.isLoggable(TAG, Log.INFO)) {
+                    Log.i(TAG, "AAP session connected : " + aap_connected);
+                }
+
+                if (aap_connected == 0) {
+                    startActivity(launchIntent);
+                }
             }
         }
     };
